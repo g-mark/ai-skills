@@ -1,6 +1,6 @@
 ---
 name: layered-design
-description: Use when the user explicitly wants help designing, planning, scoping, or architecting a non-trivial system, feature, library, parser, protocol, or refactor before implementation. Guides Codex to reason in layers of abstraction (characterization -> frame -> shape -> internals -> mechanism), derive task-specific vocabulary, compare a few plausible approaches, and confirm major decisions before going deeper. Prefer this for architecture conversations and design docs; do not let it override direct requests to implement, debug, review, or make small routine edits.
+description: Use when the user explicitly wants help designing, planning, scoping, or architecting a non-trivial system, feature, library, parser, protocol, or refactor before implementation. Guides the assistant to reason in layers of abstraction (characterization -> frame -> shape -> internals -> mechanism), derive task-specific vocabulary, compare a few plausible approaches, and confirm major decisions before going deeper. Prefer this for architecture conversations and design docs; do not let it override direct requests to implement, debug, review, or make small routine edits.
 ---
 
 # Layered Design
@@ -78,6 +78,13 @@ If the user asks for speed, a first pass, or direct implementation after design:
 - you may present a compact end-to-end first draft in one response
 - clearly label assumptions and open questions
 - invite corrections before committing to deep mechanism work
+
+### Verification mode
+
+Before implementation, pressure-test the design.
+
+- always run a short self-review pass
+- for high-risk work, strongly recommend an adversarial subagent review when the user wants that extra check
 
 ### Important constraint
 
@@ -180,6 +187,70 @@ Use this selectively for load-bearing details:
 
 Mechanism can be empty if the design is mostly architectural.
 
+## Verification
+
+Once the design is coherent, verify it before implementation.
+
+### Self-review is required
+
+Always run a brief adversarial review yourself. Try to challenge the design rather than restating it.
+
+Look for issues such as:
+
+- hidden assumptions
+- unclear boundaries or ownership
+- missing failure modes
+- migration, rollout, or compatibility risks
+- concurrency, consistency, or performance risks
+- security, privacy, or abuse-case gaps
+- awkward interfaces or responsibilities
+- places where the proposed shape does not actually satisfy the frame
+
+When you find a real issue:
+
+- call it out plainly
+- revise the design
+- explain what changed and why
+
+### Adversarial subagent review is optional
+
+An independent review can be valuable for high-stakes designs, but it is not the default.
+
+Use a subagent review only when:
+
+- the user explicitly wants subagent help or delegation
+- the design is high-risk enough that an extra reviewer is worth the added cost
+
+Examples of high-risk work:
+
+- security-sensitive systems
+- difficult migrations or rollouts
+- correctness-critical workflows
+- highly concurrent or distributed systems
+- designs with major irreversible trade-offs
+
+The subagent's role is to question assumptions, find gaps, identify edge cases, and test whether the design really follows from the requirements. It should not be asked to casually redo the whole design from scratch.
+
+Give the subagent only the minimum context needed:
+
+- the current design summary
+- the key assumptions
+- the risky areas you most want challenged
+- the desired output format, such as findings plus suggested fixes
+
+Do not leak your preferred answer if you want an honest review.
+
+### Integrating review results
+
+After self-review or subagent review:
+
+- separate true defects from preference disagreements
+- update the design where the critique is correct
+- keep a brief list of unresolved risks or explicit trade-offs
+- present the revised design or the delta before moving to implementation
+
+Not every task needs a subagent review. Every task should get self-review.
+
 ## Diagrams
 
 Use a diagram when it adds information that prose alone does not. Good uses include:
@@ -201,6 +272,8 @@ Keep diagrams compact. If a Shape diagram needs many nodes, you may be mixing Sh
 - Go back up a layer when a lower-layer detail reveals the higher-layer model was wrong.
 - Compare alternatives where the decision is real; do not invent fake choices for trivial matters.
 - Keep the design proportional to the task. Not every request needs all layers.
+- Always pressure-test the design yourself before implementation.
+- Recommend an independent adversarial review for high-risk work when the user wants it.
 - If the user wants implementation, transition cleanly once the design is good enough.
 
 ## Deliverables
@@ -241,6 +314,8 @@ Avoid these failure modes:
 - jumping to mechanism before the top-level shape is stable
 - writing sketches in the wrong language for the project
 - generating a huge design when a compact plan would do
+- treating verification as a rubber-stamp summary instead of a real attempt to find flaws
+- making subagent review mandatory for ordinary work
 
 ## Default Flow
 
@@ -252,7 +327,9 @@ Use this flow unless the user asks for a faster first pass:
 4. Compare a few shape options, recommend one, and align on it.
 5. Zoom into only the parts that deserve internals.
 6. Add mechanism detail only for the truly load-bearing pieces.
-7. Move to implementation or documentation if the user wants that next.
+7. Run a self-review pass and revise any real defects you find.
+8. For high-risk work, recommend an adversarial subagent review when the user wants that extra check.
+9. Move to implementation or documentation if the user wants that next.
 
 ## Key Principle
 
