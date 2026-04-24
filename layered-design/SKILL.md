@@ -1,6 +1,10 @@
 ---
 name: layered-design
 description: Use when the user explicitly wants help designing, planning, scoping, or architecting a non-trivial system, feature, library, parser, protocol, or refactor before implementation. Guides the assistant to reason in layers of abstraction (characterization -> frame -> shape -> internals -> mechanism), derive task-specific vocabulary, compare a few plausible approaches, and confirm major decisions before going deeper. Prefer this for architecture conversations and design docs; do not let it override direct requests to implement, debug, review, or make small routine edits.
+license: Apache-2.0
+metadata:
+  author: g-mark.com
+  version: "1.0"
 ---
 
 # Layered Design
