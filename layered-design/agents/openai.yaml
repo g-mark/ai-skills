@@ -1,6 +1,6 @@
 interface:
   display_name: "Layered Design"
   short_description: "Design and architecture planning in layers"
-  icon_small: "./assets/layered-design-small.svg"
-  icon_large: "./assets/layered-design-large.svg"
+  icon_small: "./assets/layered-design-small.png"
+  icon_large: "./assets/layered-design-large.png"
   default_prompt: "Use $layered-design to sketch the design before we implement it."
