@@ -38,7 +38,7 @@ This skill is for design work, not for hijacking normal execution. If the user c
 ### If the request is mixed, adapt:
 
 - If the user asks for "design first, then implement," do a compact design pass and then continue.
-- If the user asks for "a first pass" or "use reasonable assumptions," you may batch more content into one response, but you should still explicitly ask the user to confirm assumptions, approach, and any material design decisions before implementation.
+- If the user asks for "a first pass" or "use reasonable assumptions," you may batch more content into one response, but you should still explicitly ask the user to confirm assumptions, approach, and any material design decisions before next steps.
 - If the task is small, keep the layers short. A two-paragraph frame and a lightweight shape may be enough.
 
 ## Core Model
@@ -126,6 +126,8 @@ Example:
 ```
 
 Do not make most headings siblings at the same level when the design has clear ownership or containment. Heading depth should communicate subject hierarchy.
+
+Follow the layered-design persistent-doc guidance strictly. Use a subject-owned outline, not a layer-by-layer or flat mechanism outline. Before finalizing, show the heading tree and explain why each `##` section deserves to be top-level.
 
 ## Interaction Style
 
@@ -404,10 +406,6 @@ If you do write a design doc, use a natural subject-owned outline such as:
 
 ### <Owned Part>
 
-## Implementation Plan
-
-Include this section only when the user asks for implementation planning, asks for next steps, or the design doc is explicitly meant to guide immediate execution.
-
 ## Verification And Risks
 
 ### Verification Notes
@@ -429,6 +427,7 @@ Avoid these failure modes:
 - writing sketches in the wrong language for the project
 - defaulting to TypeScript when the user has identified a native-mobile platform
 - generating a huge design when a compact plan would do
+- writing a persistent doc from a flat or layer-by-layer outline when the subject ownership hierarchy is clear
 - treating verification as a rubber-stamp summary instead of a real attempt to find flaws
 - making subagent review mandatory for ordinary work
 
@@ -445,7 +444,8 @@ Use this flow unless the user asks for a faster first pass:
 7. Add mechanism detail only for the truly load-bearing pieces, and ask the user to confirm mechanism-level decisions before proceeding.
 8. Run a self-review pass and revise any real defects you find.
 9. For high-risk work, recommend an adversarial subagent review when the user wants that extra check.
-10. Move to implementation or documentation if the user wants that next.
+10. If writing a persistent design doc, verify the heading outline follows subject ownership before finalizing it.
+11. Move to implementation or documentation if the user wants that next.
 
 ## Key Principle
 
