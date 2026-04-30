@@ -129,6 +129,19 @@ Do not make most headings siblings at the same level when the design has clear o
 
 Follow the layered-design persistent-doc guidance strictly. Use a subject-owned outline, not a layer-by-layer or flat mechanism outline. Before finalizing, show the heading tree and explain why each `##` section deserves to be top-level.
 
+For persistent design docs, optimize for durable design decisions, not implementation instructions. Include detail only when it clarifies ownership, boundaries, contracts, invariants, user-visible behavior, meaningful trade-offs, or material risks.
+
+Do not include implementation plans, step-by-step build sequences, class sketches, code-shaped examples, or obvious mechanisms unless the user asks for implementation planning or the detail is necessary to resolve a design ambiguity.
+
+Before finalizing, run a detail audit. Keep a detail only if at least one of these is true:
+
+- It records a design decision.
+- It clarifies ownership, boundary, contract, invariant, or user-visible behavior.
+- It explains a meaningful trade-off or rejected alternative.
+- Omitting it would make the design materially ambiguous or harder to evaluate.
+
+Remove a detail if it is merely an implementation step, class sketch, code-shaped example, obvious mechanism, or something that can be safely inferred later during planning or implementation.
+
 ## Interaction Style
 
 Default to a collaborative design conversation, but keep it proportional to the request.
@@ -383,6 +396,8 @@ Choose the output format that matches the request:
 
 Do **not** assume you should create files, commit changes, or invoke another skill. Those are optional follow-on steps, not mandatory parts of this skill.
 
+Include `Implementation Plan` only when the user explicitly asks for implementation planning, next steps, sequencing, or an execution-ready design doc. A request for a design doc alone is not enough.
+
 If you do write a design doc, use a natural subject-owned outline such as:
 
 ```markdown
@@ -428,6 +443,7 @@ Avoid these failure modes:
 - defaulting to TypeScript when the user has identified a native-mobile platform
 - generating a huge design when a compact plan would do
 - writing a persistent doc from a flat or layer-by-layer outline when the subject ownership hierarchy is clear
+- adding implementation detail, code sketches, or execution plans to a persistent design doc when they do not clarify the design itself
 - treating verification as a rubber-stamp summary instead of a real attempt to find flaws
 - making subagent review mandatory for ordinary work
 
@@ -444,7 +460,7 @@ Use this flow unless the user asks for a faster first pass:
 7. Add mechanism detail only for the truly load-bearing pieces, and ask the user to confirm mechanism-level decisions before proceeding.
 8. Run a self-review pass and revise any real defects you find.
 9. For high-risk work, recommend an adversarial subagent review when the user wants that extra check.
-10. If writing a persistent design doc, verify the heading outline follows subject ownership before finalizing it.
+10. If writing a persistent design doc, verify the heading outline follows subject ownership and run the detail audit before finalizing it.
 11. Move to implementation or documentation if the user wants that next.
 
 ## Key Principle
