@@ -74,7 +74,9 @@ For in-chat design discussion, it is fine to present sections as Characterizatio
 For persistent design docs, prefer a subject hierarchy derived from the Shape layer:
 
 - Use `# <Topic> Design` as the document title.
+- Use `## Motivation` before `## Assumptions` to preserve why the design matters, what prompted it, and any important soft context from the design conversation.
 - Use early `##` sections for assumptions, context, and boundary.
+- Use `## Guiding Principles` right after `## System Context` to preserve the values, constraints, and judgment rules that should steer later decisions.
 - Use top-level `##` sections for the major owning subjects/components in the system.
 - Use `###` sections for parts owned by that subject.
 - Use `####` sections for mechanisms, policies, state machines, flows, or variants inside that part.
@@ -84,6 +86,8 @@ Example:
 ```markdown
 # Multimodal Input Composer Design
 
+## Motivation
+
 ## Assumptions
 
 ## System Context
@@ -91,6 +95,8 @@ Example:
 ### Characterization
 
 ### Boundary
+
+## Guiding Principles
 
 ## Composer
 
@@ -294,6 +300,26 @@ Mechanism can be empty if the design is mostly architectural.
 
 When you present mechanism-level details, ask the user to confirm the decision before using that mechanism as the basis for next steps.
 
+## Capturing Motivation And Principles
+
+Before self-review, add a short pass that preserves important soft context from the design process.
+
+For persistent design docs, add `## Motivation` before `## Assumptions` and `## Guiding Principles` right after `## System Context`. Keep both sections concise and specific to decisions the design should preserve.
+
+Use `Motivation` to capture:
+
+- why the work matters now
+- what user, product, operational, or organizational pressure prompted the design
+- what prior confusion, pain, risk, or opportunity the design is meant to resolve
+
+Use `Guiding Principles` to capture:
+
+- values that should shape future trade-offs
+- non-functional priorities such as safety, reversibility, simplicity, observability, durability, or user trust
+- explicit preferences discovered during the conversation that are not strict requirements but should guide implementation choices
+
+Do not let these sections become generic slogans. If a principle would not help decide between two plausible designs, omit or rewrite it.
+
 ## Verification
 
 Once the design is coherent, verify it before moving on.
@@ -403,6 +429,8 @@ If you do write a design doc, use a natural subject-owned outline such as:
 ```markdown
 # <Topic> Design
 
+## Motivation
+
 ## Assumptions
 
 ## System Context
@@ -410,6 +438,8 @@ If you do write a design doc, use a natural subject-owned outline such as:
 ### Characterization
 
 ### Boundary
+
+## Guiding Principles
 
 ## <Top-Level Subject>
 
@@ -458,10 +488,11 @@ Use this flow unless the user asks for a faster first pass:
 5. Compare a few shape options, recommend one, and ask the user to confirm the chosen direction.
 6. Zoom into only the parts that deserve internals, asking the user to confirm each internal approach that affects the design.
 7. Add mechanism detail only for the truly load-bearing pieces, and ask the user to confirm mechanism-level decisions before proceeding.
-8. Run a self-review pass and revise any real defects you find.
-9. For high-risk work, recommend an adversarial subagent review when the user wants that extra check.
-10. If writing a persistent design doc, verify the heading outline follows subject ownership and run the detail audit before finalizing it.
-11. Move to implementation or documentation if the user wants that next.
+8. Capture Motivation and Guiding Principles before self-review, especially for persistent design docs where useful soft context from the design discussion should be preserved.
+9. Run a self-review pass and revise any real defects you find.
+10. For high-risk work, recommend an adversarial subagent review when the user wants that extra check.
+11. If writing a persistent design doc, verify the heading outline follows subject ownership and run the detail audit before finalizing it.
+12. Move to implementation or documentation if the user wants that next.
 
 ## Key Principle
 
